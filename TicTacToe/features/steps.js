@@ -1,5 +1,5 @@
 ﻿const { Given, When, Then } = require("cucumber");
-const { expect, assert } = require("chai");
+const { expect } = require("chai");
 const Game = require('../tictactoe');
 const GameError = require('../error');
 

@@ -15,7 +15,6 @@ class Game {
     
     constructor(save) {
         this._game = save ? save : this.newGame();
-        console.log(this._game);
         this.currentPlayer = 1;
     }
     
