@@ -38,6 +38,11 @@ Then("победил игрок {int}", function(player) {
     expect(data.game.getWinner()).to.eql(player);
 });
 
+Then("ничья", function() {
+    data.invoke();
+    expect(data.game.getWinner()).to.eql(-1);
+});
+
 function parseSave(save) {
     const lines = save.split('|');
     return lines.map( x => x.split('').map(d => +d));

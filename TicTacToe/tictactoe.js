@@ -23,19 +23,16 @@ class Game {
         .map(x => Array(this._MATRIX_LENGTH + 1).fill(0));
     
     turn(y, x) {
-        if (this._winner > 0) return true;
+        if (this._winner !== 0) return false;
         const player = this.currentPlayer;
         x--; y--;
         if (x < 0 || x > this._MATRIX_LENGTH || y < 0 || y > this._MATRIX_LENGTH) throw new GameError(`Так нельзя ходить ${y+1}, ${x+1}`);
         if (this._game[x][y] !== 0) throw new GameError(`Клетка занята игроком ${this._game[x][y]}`);
         this._game[x][y] = player;
-        
-        const result = this.checkWinner(this._game, player);
-        if (result) {
-            this._winner = player;
-        }
+
+        this._winner = this.checkWinner(this._game, player);
         this.switchPlayer();
-        return result;
+        return (this._winner === 0);
     }
     
     checkWinner(game, player) {
@@ -45,10 +42,17 @@ class Game {
                 || this._game.map(g => g[i]).every(x => x === player)
                 || this._game.map((g, ind) => g[ind]).every(x => x === player)
                 || this._game.map((g, ind) => g[this._MATRIX_LENGTH - ind]).every(x => x === player))
-                return true;
+                return player;
         }
         
-        return false;
+        return this.checkNil(game) ? -1 : 0;
+    }
+    
+    checkNil(elem) {
+        if (Array.isArray(elem))
+            return elem.every(x => this.checkNil(x));
+        return elem !== 0;
+        
     }
     
     switchPlayer () {

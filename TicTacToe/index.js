@@ -25,6 +25,10 @@ do {
         errMessage = err.message;
     }
     
-} while (!turn);
+} while (turn);
 showGame(game);
-console.log(`Победил игрок №${game.getWinner()}`);
+const winner = game.getWinner();
+if (winner > 0)
+    console.log(`Победил игрок №${game.getWinner()}`);
+else
+    console.log(`Ничья!`);
